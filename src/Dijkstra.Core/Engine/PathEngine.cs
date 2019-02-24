@@ -1,8 +1,6 @@
 ﻿using Dijkstra.Core.Graph;
 using Priority_Queue;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Dijkstra.Core.Engine
 {
@@ -18,18 +16,18 @@ namespace Dijkstra.Core.Engine
         public PathResult<T> FindShortestPath(Node<T> source, Node<T> destination)
         {
             var pathResult = new PathResult<T>();
-            var totalCost = new Dictionary<Node<T>, int>();
+            var totalCosts = new Dictionary<Node<T>, int>();
             var previousNodes = new Dictionary<Node<T>, Edge<T>>();
             var priorityQueue = new SimplePriorityQueue<Node<T>>();
 
             foreach (var node in _graph.Nodes)
             {
                 if (node.Value.Equals(source.Value))
-                    totalCost[node] = 0;
+                    totalCosts[node] = 0;
                 else
-                    totalCost[node] = int.MaxValue;
+                    totalCosts[node] = int.MaxValue;
 
-                priorityQueue.Enqueue(node, totalCost[node]);
+                priorityQueue.Enqueue(node, totalCosts[node]);
             }
 
             while (priorityQueue.Count != 0)
@@ -58,13 +56,13 @@ namespace Dijkstra.Core.Engine
                     else
                         neighborNode = neighbor.From;
 
-                    var smallestCost = totalCost[minNode];
+                    var smallestCost = totalCosts[minNode];
                     var neighborCost = neighbor.Cost;
                     var sumCost = smallestCost + neighborCost;
 
-                    if (sumCost < totalCost[neighborNode])
+                    if (sumCost < totalCosts[neighborNode])
                     {
-                        totalCost[neighborNode] = sumCost;
+                        totalCosts[neighborNode] = sumCost;
                         previousNodes[neighborNode] = neighbor;
 
                         priorityQueue.UpdatePriority(neighborNode, sumCost);

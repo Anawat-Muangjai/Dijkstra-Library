@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Dijkstra.Core.Graph
+﻿namespace Dijkstra.Core.Graph
 {
     public class Node<T>
     {
