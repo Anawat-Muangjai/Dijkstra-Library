@@ -87,9 +87,9 @@ namespace Dijkstra.Tests.Engine
         [TestMethod]
         public void FindShortestPath_FromNodeBToNodeE_TotalCostShould9()
         {
-            var result = _pathEngine.FindShortestPath(_nodeE, _nodeA);
+            var result = _pathEngine.FindShortestPath(_nodeB, _nodeE);
 
-            Assert.AreEqual(9, result.TotalCost);
+            Assert.AreEqual(6, result.TotalCost);
         }
     }
 }

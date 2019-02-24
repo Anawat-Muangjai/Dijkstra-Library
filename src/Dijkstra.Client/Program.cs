@@ -13,24 +13,24 @@ namespace Dijkstra.Client
 
         static void FindShortestPath()
         {
-            // Create node
+            // Step 1: Create node
             var nodeA = new Node<string>("Chiang Mai");
             var nodeB = new Node<string>("Lampang");
             var nodeC = new Node<string>("Sukhothai");
             var nodeD = new Node<string>("Ayuthaya");
             var nodeE = new Node<string>("Bangkok");
 
-            // Create graph data
+            // Step 2: Create graph data
             var graph = new Graph<string>();
 
-            // Add node
+            // Step 3: Add node
             graph.AddNode(nodeA);
             graph.AddNode(nodeB);
             graph.AddNode(nodeC);
             graph.AddNode(nodeD);
             graph.AddNode(nodeE);
 
-            // Add edges
+            // Step 4: Add edges
             graph.AddEdge(nodeA, nodeB, 3);
             graph.AddEdge(nodeA, nodeC, 5);
             graph.AddEdge(nodeB, nodeA, 3);
@@ -46,7 +46,7 @@ namespace Dijkstra.Client
             graph.AddEdge(nodeE, nodeC, 6);
             graph.AddEdge(nodeE, nodeD, 4);
 
-            // Create path engine
+            // Step 5: Create path engine and call function
             var pathEngine = new PathEngine<string>(graph);
             var pathResult = pathEngine.FindShortestPath(nodeA, nodeE);
 
