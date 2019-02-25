@@ -17,7 +17,7 @@ namespace Dijkstra.Core.Engine
         {
             var pathResult = new PathResult<T>();
             var totalCosts = new Dictionary<Node<T>, int>();
-            var previousNodes = new Dictionary<Node<T>, Edge<T>>();
+            var previous = new Dictionary<Node<T>, Edge<T>>();
             var priorityQueue = new SimplePriorityQueue<Node<T>>();
 
             foreach (var node in _graph.Nodes)
@@ -32,38 +32,38 @@ namespace Dijkstra.Core.Engine
 
             while (priorityQueue.Count != 0)
             {
-                var minNode = priorityQueue.Dequeue();
+                var minimumNode = priorityQueue.Dequeue();
 
-                if (minNode.Value.Equals(destination.Value))
+                if (minimumNode.Value.Equals(destination.Value))
                 {
-                    while (previousNodes.ContainsKey(minNode))
+                    while (previous.ContainsKey(minimumNode))
                     {
-                        pathResult.Insert(previousNodes[minNode], 0);
-                        minNode = pathResult.From;
+                        pathResult.Insert(previous[minimumNode], 0);
+                        minimumNode = pathResult.From;
                     }
 
                     break;
                 }
 
-                var neighborEdges = _graph.Edges.FindAll(x => x.From.Equals(minNode));
+                var neighborEdges = _graph.Edges.FindAll(x => x.From.Equals(minimumNode));
 
                 foreach (var neighbor in neighborEdges)
                 {
                     Node<T> neighborNode;
 
-                    if (neighbor.From.Equals(minNode))
+                    if (neighbor.From.Equals(minimumNode))
                         neighborNode = neighbor.To;
                     else
                         neighborNode = neighbor.From;
 
-                    var smallestCost = totalCosts[minNode];
+                    var smallestCost = totalCosts[minimumNode];
                     var neighborCost = neighbor.Cost;
                     var sumCost = smallestCost + neighborCost;
 
                     if (sumCost < totalCosts[neighborNode])
                     {
                         totalCosts[neighborNode] = sumCost;
-                        previousNodes[neighborNode] = neighbor;
+                        previous[neighborNode] = neighbor;
 
                         priorityQueue.UpdatePriority(neighborNode, sumCost);
                     }
